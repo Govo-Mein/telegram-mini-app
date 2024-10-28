@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Слот-Машина</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+            background: url('https://github.com/Govo-Mein/picture/blob/main/piclumen-1730125358655.png?raw=true') no-repeat center center;
+            background-size: contain;
+            background-color: #f0f0f0;
+            color: #fff;
+            padding: 20px;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .slot-machine {
+            position: relative;
+            background: url('https://github.com/Govo-Mein/picture/blob/main/%D0%B7%D0%B0%D0%B2%D0%B0%D0%BD%D1%82%D0%B0%D0%B6%D0%B5%D0%BD%D0%BD%D1%8F.png?raw=true') no-repeat center;
+            background-size: contain;
+            width: 300px;
+            height: 400px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .slot-container {
+            position: absolute;
+            display: flex;
+            top: 45%;
+            transform: translateY(-50%);
+        }
+        .slot {
+            font-size: 2em;
+            width: 50px;
+            height: 105px;
+            background: #ffcccb;
+            border: 2px solid #444;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.6);
+            overflow: hidden;
+            position: relative;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .slot:first-child {
+            border-radius: 10px 0 0 10px;
+        }
+        .slot:last-child {
+            border-radius: 0 10px 10px 0;
+        }
+        .slot-inner {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+        }
+        .spin-button {
+            position: absolute;
+            bottom: 100px;
+            left: calc(50% - 1px); /* переміщено лівий край на 1 піксель */
+            transform: translateX(-50%);
+            padding: 7px 22px; /* висота зменшена на 3 пікселя */
+            font-size: 1.2em;
+            background: #a9a9a9; /* темніший колір */
+            color: black;
+            border: 2px solid #333; /* темніший темно-сірий ободок */
+            border-radius: 8px; /* більш заокруглені краї */
+            cursor: pointer;
+            transition: background 0.3s;
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+        }
+        .spin-button span {
+            font-family: 'Comic Sans MS', cursive, sans-serif; /* зміна шрифту на Comic Sans MS */
+        }
+        .spin-button:hover {
+            background: #888888;
+        }
+        .spin-button:active {
+            background: #696969;
+        }
+        .balance {
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 1.5em;
+            color: #000;
+        }
+    </style>
+</head>
+<body>
+    <div class="slot-machine">
+        <div class="balance">Баланс: <span id="balance">0</span> монет</div>
+        <div class="slot-container">
+            <div class="slot">
+                <div class="slot-inner" id="slot1"></div>
+            </div>
+            <div class="slot">
+                <div class="slot-inner" id="slot2"></div>
+            </div>
+            <div class="slot">
+                <div class="slot-inner" id="slot3"></div>
+            </div>
+        </div>
+        <button class="spin-button" onclick="spin()">🐾 <span>SPIN</span></button>
+    </div>
+    <script>
+        let balance = parseInt(localStorage.getItem('balance')) || 0;
+        document.getElementById('balance').textContent = balance;
+
+        function spin() {
+            const symbols = ['🍉', '🍋', '🍇', '🍓', '🍌'];
+            const slots = ['slot1', 'slot2', 'slot3'];
+            const results = [];
+
+            slots.forEach(id => {
+                const slot = document.getElementById(id);
+                let randomSymbol = symbols[Math.floor(Math.random() * symbols.length)];
+                slot.innerHTML = `<span>${randomSymbol}</span>`;
+                results.push(randomSymbol);
+            });
+
+            // Перевірка комбінацій
+            let reward = 0;
+            if (results[0] === results[1] && results[1] === results[2]) {
+                reward = 100; // усі однакові
+            } else if (results[0] === results[1] || results[1] === results[2] || results[0] === results[2]) {
+                reward = 10; // дві однакові
+            } else {
+                reward = 1; // усі різні
+            }
+
+            balance += reward;
+            document.getElementById('balance').textContent = balance;
+            localStorage.setItem('balance', balance);
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // завантажити баланс з локального сховища
+            balance = parseInt(localStorage.getItem('balance')) || 0;
+            document.getElementById('balance').textContent = balance;
+        });
+    </script>
+</body>
+</html>
+
