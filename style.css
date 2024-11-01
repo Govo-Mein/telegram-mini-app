@@ -1,0 +1,56 @@
+body {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: url('https://github.com/Govo-Mein/picture/blob/main/image.png?raw=true') no-repeat center center fixed;
+    background-size: cover;
+}
+
+.phone-frame {
+    width: 375px; /* ширина телефону */
+    height: 667px; /* висота телефону */
+    border: 5px solid #FF1493; /* темно-рожевий колір */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.game-container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}
+
+#cat {
+    width: 150px; /* розмір відповідно до вашого зображення */
+    height: auto;
+    cursor: pointer;
+    position: relative;
+    z-index: 1; /* котик завжди над кормом */
+}
+
+#food {
+    width: 50px; /* розмір корму */
+    height: auto;
+    position: absolute;
+    top: 170px; /* початкове положення нижче котика */
+    left: calc(50% - 18px); /* зсунемо рибку на 5 пікселів вправо */
+    display: none; /* приховати за замовчуванням */
+    z-index: 2; /* рибка перед котиком */
+    transition: top 2s linear; /* плавне падіння */
+}
+
+#score {
+    position: absolute;
+    top: 20px;
+    font-size: 24px;
+    color: #fff;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
