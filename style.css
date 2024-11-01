@@ -7,6 +7,8 @@ body {
     height: 100vh;
     background: url('https://github.com/Govo-Mein/picture/blob/main/image.png?raw=true') no-repeat center center fixed;
     background-size: cover;
+    user-select: none; /* Заборона виділення тексту та зображень */
+    -webkit-user-select: none; /* Заборона виділення на мобільних браузерах */
 }
 
 .phone-frame {
@@ -34,17 +36,18 @@ body {
     cursor: pointer;
     position: relative;
     z-index: 1; /* котик завжди над кормом */
+    -webkit-user-drag: none; /* Заборона перетягування зображень */
+    user-drag: none; /* Заборона перетягування зображень */
+    outline: none; /* Заборона синього підсвічування при натисканні */
 }
 
-#food {
+.food {
     width: 50px; /* розмір корму */
     height: auto;
     position: absolute;
-    top: 170px; /* початкове положення нижче котика */
-    left: calc(50% - 18px); /* зсунемо рибку на 5 пікселів вправо */
-    display: none; /* приховати за замовчуванням */
+    display: block; /* зробити видимим */
     z-index: 2; /* рибка перед котиком */
-    transition: top 2s linear; /* плавне падіння */
+    transition: top 1.5s linear; /* плавне падіння */
 }
 
 #score {
